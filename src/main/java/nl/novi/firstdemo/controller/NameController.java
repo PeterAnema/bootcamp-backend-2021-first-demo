@@ -41,7 +41,7 @@ public class NameController {
     @PutMapping(value = "/names/{id}")
     public String updateName(@PathVariable int id, @RequestBody String name) {
         names.set(id, name);
-        return "Update name " + name;
+        return "Updated name " + name;
     }
 
 
