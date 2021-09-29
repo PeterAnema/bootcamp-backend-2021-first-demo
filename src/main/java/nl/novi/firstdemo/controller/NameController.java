@@ -31,5 +31,18 @@ public class NameController {
         return "Added name " + name;
     }
 
+    @DeleteMapping(value = "/names/{id}")
+    public String deleteName(@PathVariable int id) {
+        String name = names.get(id);
+        names.remove(id);
+        return "Removed name " + name;
+    }
+
+    @PutMapping(value = "/names/{id}")
+    public String updateName(@PathVariable int id, @RequestBody String name) {
+        names.set(id, name);
+        return "Update name " + name;
+    }
+
 
 }
