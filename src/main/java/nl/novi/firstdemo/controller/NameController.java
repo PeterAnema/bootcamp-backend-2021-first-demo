@@ -18,8 +18,8 @@ public class NameController {
     }
 
     @GetMapping(value = "/names")
-    public String[] getNames() {
-        return (String[]) names.toArray();
+    public List<String> getNames() {
+        return names;
     }
 
     @GetMapping(value = "/names/{id}")
