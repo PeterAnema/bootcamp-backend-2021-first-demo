@@ -1,5 +1,6 @@
 package nl.novi.firstdemo.controller;
 
+import nl.novi.firstdemo.exception.RecordNotFoundException;
 import nl.novi.firstdemo.model.Product;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -16,7 +17,12 @@ public class ProductController {
 
     @GetMapping(value = "/products/{id}")
     public Product getProduct(@PathVariable int id) {
-        return products.get(id);
+        try {
+            return products.get(id);
+        }
+        catch (IndexOutOfBoundsException ex) {
+            throw new RecordNotFoundException("Product with id " + id + " not found.");
+        }
     }
 
     @PostMapping(value = "/products")
