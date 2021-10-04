@@ -2,6 +2,8 @@ package nl.novi.firstdemo.controller;
 
 import nl.novi.firstdemo.exception.RecordNotFoundException;
 import nl.novi.firstdemo.model.Customer;
+import nl.novi.firstdemo.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,57 +14,40 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
-    private static List<Customer> customers = new ArrayList<>();
-
-    public CustomerController() {
-    }
+    @Autowired
+    private CustomerService customerService;
 
     @GetMapping(value = "/customers")
     @ResponseStatus(HttpStatus.OK)
     public List<Customer> getCustomers() {
-        return customers;
+        return customerService.getCustomers();
     }
 
     @GetMapping(value = "/customers/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Customer getCustomer(@PathVariable int id) {
-        try {
-            return customers.get(id);
-        }
-        catch (IndexOutOfBoundsException ex) {
-            throw new RecordNotFoundException("Customer with id " + id + " not found.");
-        }
+        return customerService.getCustomer(id);
     }
 
     @PostMapping(value = "/customers")
     @ResponseStatus(HttpStatus.CREATED)
     public String addCustomer(@RequestBody Customer customer) {
-        customers.add(customer);
-        return "Added customer";
+        customerService.addCustomer(customer);
+        return "Added";
     }
 
     @DeleteMapping(value = "/customers/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteCustomer(@PathVariable int id) {
-        try {
-            customers.remove(id);
-        }
-        catch (IndexOutOfBoundsException ex) {
-            throw new RecordNotFoundException("Customer with id " + id + " not found.");
-        }
-        return "Removed customers";
+        customerService.deleteCustomer(id);
+        return "Removed";
     }
 
     @PutMapping(value = "/customers/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
-        try {
-            customers.set(id, customer);
-        }
-        catch (IndexOutOfBoundsException ex) {
-            throw new RecordNotFoundException("Customer with id " + id + " not found.");
-        }
-        return "Updated customer";
+        customerService.updateCustomer(id, customer);
+        return "Updated";
     }
 
 }
