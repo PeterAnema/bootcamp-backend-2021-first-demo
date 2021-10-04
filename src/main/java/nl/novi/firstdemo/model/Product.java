@@ -14,6 +14,7 @@ public class Product {
     // constructor not required for Springboot Hibernate
     public Product() {
     }
+
     public Product(String name,
                    String kind,
                    String packaging,
@@ -86,4 +87,5 @@ public class Product {
     public void setVatPercentage(int vatPercentage) {
         this.vatPercentage = vatPercentage;
     }
+
 }
